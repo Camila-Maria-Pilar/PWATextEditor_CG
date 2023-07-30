@@ -26,5 +26,12 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// TODO: Implement asset caching
-registerRoute();
+// Asset caching for common file extensions
+registerRoute(
+  ({ request }) => request.destination === 'style' ||
+                   request.destination === 'script' ||
+                   request.destination === 'image',
+  new CacheFirst()
+);
+
+// Removed the empty registerRoute call.
